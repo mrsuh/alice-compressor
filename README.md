@@ -13,7 +13,7 @@ Compression text [file](./data/alice.txt) **Alice's Adventures in Wonderland**
 
 ## Naive
 
-### Structure
+#### Structure
 
 | dict bit | dict size | dict word length | dict word |
 |----------|-----------|------------------|-----------|
@@ -23,7 +23,7 @@ Compression text [file](./data/alice.txt) **Alice's Adventures in Wonderland**
 |----------|---------------|-------------|-------|----------|---------------|-----------------|
 | 1 bit    | 1 bit         | 6 bit       | N bit | 1 bit    | 1 bit         | 6 bit           |
 
-### Example
+#### Example
 
 `ccc ab ab`
 
@@ -35,7 +35,7 @@ Compression text [file](./data/alice.txt) **Alice's Adventures in Wonderland**
 |----------|---------------|-------------|------|----------|---------------|-----------------|----------|---------------|-----------------|
 | 0        | 1             | 3           | ccc  | 0        | 0             | 0               | 0        | 0             | 0               |
 
-### Usage
+#### Usage
 
 ```bash
 php bin/compressor.php naive compress 256KB data/alice.txt data/alice.txt.compressed
@@ -43,7 +43,7 @@ php bin/compressor.php naive compress 256KB data/alice.txt data/alice.txt.compre
 php bin/compressor.php naive decompress 256KB data/alice.txt.compressed data/alice.txt.decompressed 
 ```
 
-### Info
+#### Info
 
 | Buffer size | Compress time | Decompress time | Original file size | Compressed file size | Compressed file size diff | Hash match |
 |-------------|---------------|-----------------|--------------------|----------------------|---------------------------|------------|
@@ -60,13 +60,13 @@ php bin/compressor.php naive decompress 256KB data/alice.txt.compressed data/ali
 
 https://en.wikipedia.org/wiki/Run-length_encoding
 
-### Structure
+#### Structure
 
 | text length | text  | duplicate chars count | duplicate char |
 |-------------|-------|-----------------------|----------------|
 | 8 bit       | N bit | 8 bit                 | 8 bit          |
 
-### Example
+#### Example
 
 `abcdeee`
 
@@ -74,10 +74,14 @@ https://en.wikipedia.org/wiki/Run-length_encoding
 |-------------|------|-----------------------|----------------|
 | 4           | abcd | -3                    | e              |
 
+#### Usage
+
 ```bash
 php bin/compressor.php rle compress 2KB data/alice.txt data/alice.txt.compressed
 php bin/compressor.php rle decompress 2KB data/alice.txt.compressed data/alice.txt.decompressed 
 ```
+
+#### Info
 
 | Compress time | Decompress time | Original file size | Compressed file size | Compressed file size diff | Hash match |
 |---------------|-----------------|--------------------|----------------------|---------------------------|------------|
@@ -87,13 +91,13 @@ php bin/compressor.php rle decompress 2KB data/alice.txt.compressed data/alice.t
 
 https://ru.wikipedia.org/wiki/LZ77
 
-### Structure
+#### Structure
 
 | offset | length | char  |
 |--------|--------|-------|
 | 8 bit  | 8 bit  | 8 bit |
 
-### Example
+#### Example
 
 `ababd`
 
@@ -101,10 +105,14 @@ https://ru.wikipedia.org/wiki/LZ77
 |--------|--------|------|--------|--------|------|--------|--------|------|
 | 0      | 0      | a    | 0      | 0      | b    | 2      | 2      | d    |
 
+#### Usage
+
 ```bash
 php bin/compressor.php lz77 compress 64KB data/alice.txt data/alice.txt.compressed
 php bin/compressor.php lz77 decompress 64KB data/alice.txt.compressed data/alice.txt.decompressed 
 ```
+
+#### Info
 
 | Buffer size | Compress time | Decompress time | Original file size | Compressed file size | Compressed file size diff | Hash match |
 |-------------|---------------|-----------------|--------------------|----------------------|---------------------------|------------|
@@ -117,13 +125,13 @@ php bin/compressor.php lz77 decompress 64KB data/alice.txt.compressed data/alice
 
 ## LZ77M
 
-### Structure
+#### Structure
 
 | text/char bit | text length | text  | text/char bit | offset | length | char  |
 |---------------|-------------|-------|---------------|--------|--------|-------|
 | 1 bit         | 7 bit       | N bit | 1 bit         | 7 bit  | 8 bit  | 8 bit |
 
-### Example
+#### Example
 
 `ababd`
 
@@ -131,10 +139,14 @@ php bin/compressor.php lz77 decompress 64KB data/alice.txt.compressed data/alice
 |---------------|-------------|------|---------------|--------|--------|------|
 | 1             | 2           | ab   | 0             | 2      | 2      | d    |
 
+#### Usage
+
 ```bash
 php bin/compressor.php lz77m compress 32KB data/alice.txt data/alice.txt.compressed
 php bin/compressor.php lz77m decompress 32KB data/alice.txt.compressed data/alice.txt.decompressed 
 ```
+
+#### Info
 
 | Buffer size | Compress time | Decompress time | Original file size | Compressed file size | Compressed file size diff | Hash match |
 |-------------|---------------|-----------------|--------------------|----------------------|---------------------------|------------|
